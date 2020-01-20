@@ -34,7 +34,7 @@ class _HotProjectWidget extends BaseStateWidget<HotProjectWidget>{
       child: _getProjectItem(widget._dataBean),
       onTap: (){
         pushWidget(widget._context,
-            WebPage(widget._dataBean.envelopePic,widget._dataBean.title));
+            WebPage(widget._dataBean.link,widget._dataBean.title));
       },
     ) ;
   }
