@@ -46,6 +46,7 @@ class _WxPublicList extends BaseStateWidget<WxPublicList> {
   @override
   Widget getBuildWidget(BuildContext buildContext) {
     // TODO: implement getBuildWidget
+    print("进来了哦==========公众号");
     return Scaffold(
       appBar: AppBar(
         leading: GestureDetector(
@@ -151,6 +152,7 @@ class _WxPublicList extends BaseStateWidget<WxPublicList> {
                       ),
                       alignment: Alignment.topLeft,
                     ),
+                     Container(height: getHeight(Dimens.dp20),),
                     Row(
                       children: <Widget>[
                         new Text(

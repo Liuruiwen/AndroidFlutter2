@@ -46,6 +46,7 @@ class _HomePage extends PageStateWidget<HomePage> {
   AppBloc _appBloc;
   ScrollController _scrollController;
   int _stateColor=0;
+  String _city="定位中";
 //  MethodChannel _methodChannel = MethodChannel(Common.CONNECT_CONTEXT); //与android连接
 
   @override
@@ -69,18 +70,13 @@ class _HomePage extends PageStateWidget<HomePage> {
 
     WidgetsBinding.instance
         .addPostFrameCallback((_) => _bloc.initData(widget._context));
-
-//    _methodChannel.setMethodCallHandler(_handler);
-  }
-//接收android监听
-  Future<dynamic> _handler(MethodCall call) {
-    switch (call.method) {
-      case 'android':
-        setState(() {});
-        var msg = call.arguments;
-//        _text = msg.toString();
-        break;
-    }
+    _appBloc.faStream.listen((call){
+      switch (call.method) {
+        case 'gps'://获取当前位置
+          setState(() {_city=call.arguments;});
+          break;
+      }
+    });
   }
 
 
@@ -125,7 +121,7 @@ class _HomePage extends PageStateWidget<HomePage> {
           new GestureDetector(
               child: new Container(
                 child: Text(
-                  "佛山",
+                  _city,
                   style: TextStyle(fontSize: getSp(Dimens.sp26),color: getFontColor(_stateColor,1)),
                 ),
                 padding: EdgeInsets.only(left: 5),
@@ -133,7 +129,7 @@ class _HomePage extends PageStateWidget<HomePage> {
               onTap: () {
                 //发消息给Android
                 _appBloc.getMethodChannel().invokeListMethod(
-                    'flutter', '不晓得说点什么好');
+                    'map', '当前地图');
               }),
           Expanded(
               child: GestureDetector(child: Container(

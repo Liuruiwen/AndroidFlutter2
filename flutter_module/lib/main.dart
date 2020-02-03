@@ -33,14 +33,9 @@ class _MyApp extends State<MyApp>{
   ////接收android监听
   Future<dynamic> _handler(MethodCall call){
     switch (call.method) {
-      case 'login_out'://退出登录
+      default:
         setState(() {});
         _bloc.addMethodCall(call);
-        break;
-      case 'login':
-        setState(() {});
-        _bloc.addMethodCall(call);
-
         break;
     }
   }

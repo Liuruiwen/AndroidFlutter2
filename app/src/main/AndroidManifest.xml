@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.umeng.soexample">
+    package="com.umeng.soexample" >
 
     <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" /> <!-- 获取CUID，用于鉴权，请求签名等 -->
     <uses-permission android:name="com.android.launcher.permission.WRITE_SETTINGS" /> <!-- 这个权限用于进行网络定位 -->
@@ -31,34 +31,27 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"
-            android:screenOrientation="portrait"
-            />
-        <!-- 明确引用org.apache.http.legacy库，避免QQ官方open sdk在Android 9上报错 -->
+        android:theme="@style/AppTheme" >
+        <activity android:name=".ui.MapActivity" >
+        </activity>
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait" /> <!-- 明确引用org.apache.http.legacy库，避免QQ官方open sdk在Android 9上报错 -->
         <!-- <uses-library android:name="org.apache.http.legacy" android:required="false"/> -->
-        <activity android:name=".WelcomeActivity"
-            android:screenOrientation="portrait"
-            >
+        <activity
+            android:name=".WelcomeActivity"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
+        </activity> <!-- 高德地图相关 -->
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="42998b3144a448eb6b0498db8e03ed89" />
 
-        <meta-data
-            android:name="com.baidu.lbsapi.API_KEY"
-            android:value="UtOpsiDXItfGullwg5vimGiPWiagL1qr" />
-        <meta-data
-            android:name="android.max_aspect"
-            android:value="2.1" /> <!-- 百度地图相关 -->
-        <!-- 声明service组件 -->
-        <service
-            android:name="com.baidu.location.f"
-            android:enabled="true"
-            android:process=":remote" /> <!-- umShare 相关 start -->
-        <!-- WeiXin callback -->
+        <service android:name="com.amap.api.location.APSService" /> <!-- WeiXin callback -->
         <activity
             android:name=".wxapi.WXEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -67,7 +60,7 @@
         <activity
             android:name="com.tencent.tauth.AuthActivity"
             android:launchMode="singleTask"
-            android:noHistory="true">
+            android:noHistory="true" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 

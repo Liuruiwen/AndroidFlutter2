@@ -1,16 +1,24 @@
 package com.umeng.soexample;
 
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import com.amap.api.location.AMapLocation;
+import com.amap.api.location.AMapLocationClient;
+import com.amap.api.location.AMapLocationClientOption;
+import com.amap.api.location.AMapLocationListener;
 import com.google.gson.Gson;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
@@ -21,6 +29,7 @@ import com.umeng.socialize.utils.SocializeUtils;
 import com.umeng.soexample.base.BaseActivity;
 import com.umeng.soexample.bean.ShareBean;
 import com.umeng.soexample.ui.LoginActivity;
+import com.umeng.soexample.ui.MapActivity;
 import com.umeng.soexample.ui.UMShareActivity;
 import com.umeng.soexample.until.CustomShareListener;
 import com.umeng.soexample.until.LoginOutListener;
@@ -28,14 +37,20 @@ import com.umeng.soexample.until.ShareManager;
 
 import java.util.Map;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import io.flutter.facade.Flutter;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.view.FlutterView;
 
+import static androidx.core.content.PermissionChecker.PERMISSION_GRANTED;
+
 ///Wrong 2nd argument type:Found:'androidx.lifecycle.Lifeycle',required:'lifecy
 public class MainActivity extends BaseActivity implements ShareBoardlistener {
 
+    ///==============分享相关==============
     private MethodChannel mMethodChannel;//建立flutter连接
     private FrameLayout mainFrameLayout;
     private String METHOD_CHANNER = "com.umeng.soexample";
@@ -43,6 +58,12 @@ public class MainActivity extends BaseActivity implements ShareBoardlistener {
     private CustomShareListener customShareListener;
     private ShareBean _shareBean;
     private ShareManager shareManager;
+    ///==============定位相关==============
+    private static final int NOT_NOTICE = 2;//如果勾选了不再询问
+    private AlertDialog alertDialog;
+    private AlertDialog mDialog;
+    public AMapLocationClient mLocationClient = null;
+    public AMapLocationClientOption mLocationOption = null;
     public static Intent getIntent(Context context) {
         return new Intent(context, MainActivity.class);
     }
@@ -70,12 +91,17 @@ public class MainActivity extends BaseActivity implements ShareBoardlistener {
         //初始化MethodChannel
         mMethodChannel = new MethodChannel(flutterView, METHOD_CHANNER);
         initListener();
+        ////========定位处理======
+        requestPermission();
 
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
+        if(requestCode==NOT_NOTICE){
+            requestPermission();//由于不知道是否选择了允许所以需要再次判断
+        }
     }
 
     @Override
@@ -96,8 +122,8 @@ public class MainActivity extends BaseActivity implements ShareBoardlistener {
             @Override
             public void onMethodCall(MethodCall methodCall, MethodChannel.Result result) {
                 switch (methodCall.method) {
-                    case "flutter":
-                        startActivity(UMShareActivity.getIntent(MainActivity.this));
+                    case "map":
+                        startActivity(MapActivity.getIntent(MainActivity.this));
                         break;
                     case "login_weixin":
                         UMShareAPI.get(MainActivity.this).getPlatformInfo(MainActivity.this, SHARE_MEDIA.WEIXIN, authListener);
@@ -247,5 +273,98 @@ public class MainActivity extends BaseActivity implements ShareBoardlistener {
         }
     }
 
+    ///========================定位相关============================
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == 1) {
+            for (int i = 0; i < permissions.length; i++) {
+                if (grantResults[i] == PERMISSION_GRANTED) {//选择了“始终允许”
+                    Toast.makeText(this, "" + "权限" + permissions[i] + "申请成功", Toast.LENGTH_SHORT).show();
+                    initGps();
+                } else {
+                    if (!ActivityCompat.shouldShowRequestPermissionRationale(this, permissions[i])){//用户选择了禁止不再询问
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                        builder.setTitle("permission")
+                                .setMessage("点击允许才能定位当前位置哦")
+                                .setPositiveButton("去允许", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        if (mDialog != null && mDialog.isShowing()) {
+                                            mDialog.dismiss();
+                                        }
+                                        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                                        Uri uri = Uri.fromParts("package", getPackageName(), null);//注意就是"package",不用改成自己的包名
+                                        intent.setData(uri);
+                                        startActivityForResult(intent, NOT_NOTICE);
+                                    }
+                                });
+                        mDialog = builder.create();
+                        mDialog.setCanceledOnTouchOutside(false);
+                        mDialog.show();
+
+
+
+                    }else {//选择禁止
+                        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                        builder.setTitle("permission")
+                                .setMessage("点击允许才能定位当前位置哦")
+                                .setPositiveButton("去允许", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        if (alertDialog != null && alertDialog.isShowing()) {
+                                            alertDialog.dismiss();
+                                        }
+                                        ActivityCompat.requestPermissions(MainActivity.this,
+                                                new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
+                                    }
+                                });
+                        alertDialog = builder.create();
+                        alertDialog.setCanceledOnTouchOutside(false);
+                        alertDialog.show();
+                    }
+
+                }
+            }
+        }
+    }
+
+
+    private void requestPermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
+        }else {
+            initGps();
+        }
+    }
+
+    private  void initGps(){
+//初始化定位
+        mLocationClient = new AMapLocationClient(getApplicationContext());
+//设置定位回调监听
+        mLocationClient.setLocationListener( new AMapLocationListener() {
+            @Override
+            public void onLocationChanged(AMapLocation location) {
+                mMethodChannel.invokeMethod("gps",location.getCity());
+            }
+        });
+
+        //初始化AMapLocationClientOption对象
+        mLocationOption = new AMapLocationClientOption();
+        AMapLocationClientOption option = new AMapLocationClientOption();
+        /**
+         * 设置定位场景，目前支持三种场景（签到、出行、运动，默认无场景）
+         */
+        option.setLocationPurpose(AMapLocationClientOption.AMapLocationPurpose.SignIn);
+        if(null != mLocationClient){
+            mLocationClient.setLocationOption(option);
+            //设置场景模式后最好调用一次stop，再调用start以保证场景模式生效
+            mLocationClient.stopLocation();
+            mLocationClient.startLocation();
+        }
+
+        //设置定位模式为AMapLocationMode.Hight_Accuracy，高精度模式。
+        mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
+    }
 
 }
