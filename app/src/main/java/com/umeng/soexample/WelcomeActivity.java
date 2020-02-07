@@ -1,14 +1,16 @@
 package com.umeng.soexample;
 
-import androidx.appcompat.app.AppCompatActivity;
 
-import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.TextView;
 
 import com.umeng.soexample.base.BaseActivity;
-
+/**
+ * Created by Amuse
+ * Date:2019/12/6.
+ * Desc:
+ */
 public class WelcomeActivity extends BaseActivity {
 
     private TextView tvClick;

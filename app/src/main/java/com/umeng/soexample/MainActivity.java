@@ -48,7 +48,11 @@ import io.flutter.plugin.common.MethodChannel;
 import io.flutter.view.FlutterView;
 
 import static androidx.core.content.PermissionChecker.PERMISSION_GRANTED;
-
+/**
+ * Created by Amuse
+ * Date:2019/12/6.
+ * Desc:
+ */
 public class MainActivity extends BaseActivity implements ShareBoardlistener {
     private MethodChannel mMethodChannel;
     private FrameLayout mainFrameLayout;

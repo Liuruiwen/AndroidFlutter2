@@ -30,7 +30,11 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import static androidx.core.content.PermissionChecker.PERMISSION_GRANTED;
-
+/**
+ * Created by Amuse
+ * Date:2020/1/20.
+ * Desc:
+ */
 public class MapActivity extends AppCompatActivity implements GeocodeSearch.OnGeocodeSearchListener{
     ///===========权限申请
     private static final int NOT_NOTICE = 2;//如果勾选了不再询问
