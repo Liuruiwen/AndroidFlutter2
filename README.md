@@ -19,7 +19,8 @@ This project is a starting point for a Flutter application.
       4、搜索<br>
       5、上拉刷新、下载加载 <br>
       6、我的等等相关功能模块。  <br>
- # 扫码下载apk<br>
+  # 扫码下载apk<br>
+     <img src="https://github.com/Liuruiwen/AndroidFlutter2/blob/master/gif/AndroidFlutterCode.png"> 
      <img src="https://github.com/Liuruiwen/AndroidFlutter2/blob/master/gif/AndroidFlutterCode.png"> 
  
 </div>
