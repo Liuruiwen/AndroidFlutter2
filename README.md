@@ -21,8 +21,6 @@ This project is a starting point for a Flutter application.
       6、我的等等相关功能模块。  <br>
   # 扫码下载apk<br>
    <div> <img src="https://github.com/Liuruiwen/AndroidFlutter2/blob/master/gif/AndroidFlutterCode.png"> </div> 
-     <img src="https://github.com/Liuruiwen/AndroidFlutter2/blob/master/gif/AndroidFlutterCode.png"> 
- 
 </div>
 
 
