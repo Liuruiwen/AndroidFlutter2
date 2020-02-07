@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'BaseFulWidget.dart';
 import 'BaseStateWidget.dart';
-/**
- * Created :Auser
- *  Date: 2019/5/6.
- *  Desc:初始化Scaffold
- */
 
+/**
+ * Created by Amuser
+ * Date:2019/12/12.
+ * Desc:
+ */
 class BaseWidget<T extends BaseFulWidget> extends BaseStateWidget<T> {
 
 

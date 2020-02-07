@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
+
 /**
  * Created by Amuser
- * Date:2019/10/19.
+ * Date:2019/12/6.
  * Desc:
  */
-
 Type _typeOf<T>() => T;
 
 abstract class BlocBase {

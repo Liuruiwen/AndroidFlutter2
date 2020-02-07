@@ -6,8 +6,8 @@ import 'dart:ui';
 
 /**
  * Created by Amuser
- * Date:2019/7/25.
- * Desc:搜索
+ * Date:2019/12/23.
+ * Desc:
  */
 class SearchTitleField extends StatefulWidget {
   final Function onLeftBack;
@@ -86,24 +86,18 @@ class SearchTitleState extends State<SearchTitleField> {
       controller: widget.controller,
 
       autocorrect: true,
-      //是否自动更正
       autofocus: true,
-      //是否自动对焦
       obscureText: _obscureText,
       enabled: widget.isEnable,
-      //是否是密码
       textAlign: TextAlign.center,
 
-//      buildCounter:buildCounter,
       decoration: InputDecoration(
-        //输入框decoration属性
           contentPadding: new EdgeInsets.only(left: 0.0),
           border: InputBorder.none,
 
           hintText: widget.hintContent,
 
           hintStyle: new TextStyle(fontSize: 14, color: Colors.white)),
-      //文本对齐方式
       style: TextStyle(
           fontSize: ScreenUtil.getInstance().setSp(30),
           color: Colors.blue), //输入文本的样式
@@ -114,9 +108,8 @@ class SearchTitleState extends State<SearchTitleField> {
 
   Widget _getBorderText(){
     return Container(
-      //修饰黑色背景与圆角
       decoration: new BoxDecoration(
-        border: Border.all(color: Colors.white, width: 1.0), //灰色的一层边框
+        border: Border.all(color: Colors.white, width: 1.0),
         color: Colors.white,
         borderRadius: new BorderRadius.all(new Radius.circular(30.0)),
       ),

@@ -1,3 +1,9 @@
+/**
+ * Created by Amuser
+ * Date:2019/7/30.
+ * Desc:颜色
+ */
+
 class Dimens {
   static const double font_sp10 = 10;
   static const double font_sp12 = 12;

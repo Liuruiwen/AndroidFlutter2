@@ -1,11 +1,9 @@
 import 'package:json_annotation/json_annotation.dart';
 /**
  * Created by Amuser
- * Date:2019/8/19.
- * Desc:公众号
+ * Date:2019/12/15.
+ * Desc:
  */
-
-
 @JsonSerializable()
 class ChaptersBean {
 

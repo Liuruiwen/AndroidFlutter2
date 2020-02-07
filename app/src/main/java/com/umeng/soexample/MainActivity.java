@@ -2,16 +2,20 @@ package com.umeng.soexample;
 
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
@@ -28,9 +32,7 @@ import com.umeng.socialize.utils.ShareBoardlistener;
 import com.umeng.socialize.utils.SocializeUtils;
 import com.umeng.soexample.base.BaseActivity;
 import com.umeng.soexample.bean.ShareBean;
-import com.umeng.soexample.ui.LoginActivity;
 import com.umeng.soexample.ui.MapActivity;
-import com.umeng.soexample.ui.UMShareActivity;
 import com.umeng.soexample.until.CustomShareListener;
 import com.umeng.soexample.until.LoginOutListener;
 import com.umeng.soexample.until.ShareManager;
@@ -47,19 +49,15 @@ import io.flutter.view.FlutterView;
 
 import static androidx.core.content.PermissionChecker.PERMISSION_GRANTED;
 
-///Wrong 2nd argument type:Found:'androidx.lifecycle.Lifeycle',required:'lifecy
 public class MainActivity extends BaseActivity implements ShareBoardlistener {
-
-    ///==============分享相关==============
-    private MethodChannel mMethodChannel;//建立flutter连接
+    private MethodChannel mMethodChannel;
     private FrameLayout mainFrameLayout;
     private String METHOD_CHANNER = "com.umeng.soexample";
     private ProgressDialog dialog;
     private CustomShareListener customShareListener;
     private ShareBean _shareBean;
     private ShareManager shareManager;
-    ///==============定位相关==============
-    private static final int NOT_NOTICE = 2;//如果勾选了不再询问
+    private static final int NOT_NOTICE = 2;
     private AlertDialog alertDialog;
     private AlertDialog mDialog;
     public AMapLocationClient mLocationClient = null;
@@ -88,10 +86,8 @@ public class MainActivity extends BaseActivity implements ShareBoardlistener {
             }
         };
         flutterView.addFirstFrameListener(listeners[0]);
-        //初始化MethodChannel
         mMethodChannel = new MethodChannel(flutterView, METHOD_CHANNER);
         initListener();
-        ////========定位处理======
         requestPermission();
 
     }
@@ -160,6 +156,9 @@ public class MainActivity extends BaseActivity implements ShareBoardlistener {
                         }
 
 
+                        break;
+                    case "state_color":
+                        setStatusBarColor(MainActivity.this,methodCall.arguments.toString());
                         break;
                 }
             }
@@ -273,7 +272,6 @@ public class MainActivity extends BaseActivity implements ShareBoardlistener {
         }
     }
 
-    ///========================定位相关============================
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -339,32 +337,33 @@ public class MainActivity extends BaseActivity implements ShareBoardlistener {
     }
 
     private  void initGps(){
-//初始化定位
         mLocationClient = new AMapLocationClient(getApplicationContext());
-//设置定位回调监听
         mLocationClient.setLocationListener( new AMapLocationListener() {
             @Override
             public void onLocationChanged(AMapLocation location) {
                 mMethodChannel.invokeMethod("gps",location.getCity());
             }
         });
-
-        //初始化AMapLocationClientOption对象
         mLocationOption = new AMapLocationClientOption();
         AMapLocationClientOption option = new AMapLocationClientOption();
-        /**
-         * 设置定位场景，目前支持三种场景（签到、出行、运动，默认无场景）
-         */
         option.setLocationPurpose(AMapLocationClientOption.AMapLocationPurpose.SignIn);
         if(null != mLocationClient){
             mLocationClient.setLocationOption(option);
-            //设置场景模式后最好调用一次stop，再调用start以保证场景模式生效
             mLocationClient.stopLocation();
             mLocationClient.startLocation();
         }
 
-        //设置定位模式为AMapLocationMode.Hight_Accuracy，高精度模式。
         mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
+    }
+
+    public  void setStatusBarColor(Activity activity,String  color) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = activity.getWindow();
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(Color.parseColor(color));
+
+        }
     }
 
 }

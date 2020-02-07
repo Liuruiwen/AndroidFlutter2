@@ -8,7 +8,7 @@ import 'BaseFulWidget.dart';
 
 /**
  * Created by Amuser
- * Date:2019/8/5.
+ * Date:2019/12/12.
  * Desc:
  */
  class BaseStateWidget<T extends BaseFulWidget> extends State<T> {
@@ -71,10 +71,7 @@ import 'BaseFulWidget.dart';
     Navigator.pop(context);
   }
 
-//  void closeForWidget(ResultCode result) async {
-//    Navigator.pop(context, result);
-//    print("经过了这里？？");
-//  }
+
 
 
   void closePageForWidget(BuildContext buildContext, Widget widget) {
@@ -91,7 +88,7 @@ import 'BaseFulWidget.dart';
           children: <Widget>[
             new Container(
               child: new Image(
-                image: new AssetImage('image/gift_bill_list_empty.png'),
+                image: new AssetImage('drawable/image/loading_error.jpg'),
                 width: MediaQuery
                     .of(context)
                     .size
@@ -101,7 +98,7 @@ import 'BaseFulWidget.dart';
               ),
               margin: EdgeInsets.only(left: 80, right: 80, bottom: 30),
             ),
-            new Expanded(child:   new Text("亲，没有数据哦！"),)
+            new Expanded(child:   new Text("亲，系统开小差哦！",style: TextStyle(fontSize: getSp(Dimens.sp30))),)
 
           ],
         ),
@@ -110,11 +107,9 @@ import 'BaseFulWidget.dart';
     );
   }
 
-  ///获取宽度
      getWidth(int width){
     return ScreenUtil.getInstance().setWidth(width);
     }
-    ///获取高度
    double  getHeight(int height){
      return ScreenUtil.getInstance().setHeight(height);
    }
@@ -123,9 +118,6 @@ import 'BaseFulWidget.dart';
      return  ScreenUtil.getInstance().setSp(sp);
    }
 
-   /**
-    * 获取状态栏
-    */
    getStateWidget(){
     return Container(height: MediaQueryData.fromWindow(window).padding.top,
       color: Colors.blue[500],

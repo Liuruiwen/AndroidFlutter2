@@ -89,7 +89,6 @@ class _KnowledgePage extends PageStateWidget<KnowledgePage> {
         });
   }
 
-  ///获取导航菜单
   Widget _getListView(List<NaiBean> list) {
     return new ListView.builder(
       padding: EdgeInsets.all(0),

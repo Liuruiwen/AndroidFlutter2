@@ -1,10 +1,8 @@
 import 'DataJson.dart';
-
 /**
  * Created by Amuser
- * Date:2019/10/18.
+ * Date:2019/12/10.
  * Desc:
- *https://javiercbk.github.io/json_to_dart/
  */
 class BaseBean<T> {
   int errorCode;

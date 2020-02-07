@@ -3,7 +3,7 @@ import 'package:flutter_module/moudle/base/widget/EmptyPageWidget.dart';
 
 /**
  * Created by Amuser
- * Date:2019/12/25.
+ * Date:2019/12/22.
  * Desc:
  */
 typedef void onRefrsh();
@@ -25,9 +25,9 @@ class RefreshListView extends StatefulWidget{
 }
 
 class _RefreshListView extends State<RefreshListView>{
-  ScrollController _scrollController = new ScrollController(); //滚动监听控件
+  ScrollController _scrollController = new ScrollController();
   final GlobalKey<RefreshIndicatorState> _refresh = new GlobalKey<
-      RefreshIndicatorState>(); //刷新控制器
+      RefreshIndicatorState>(); 
   @override
   void initState() {
     // TODO: implement initState

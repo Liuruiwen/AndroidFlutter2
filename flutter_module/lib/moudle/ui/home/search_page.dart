@@ -17,8 +17,8 @@ import 'bloc/search_page_bloc.dart';
 
 /**
  * Created by Amuser
- * Date:2020/1/4.
- * Desc:搜索页面
+ * Date:2020/1/5.
+ * Desc:
  */
 class SearchPage extends BaseFulWidget {
   @override
@@ -201,7 +201,6 @@ class _SearchPage extends BaseStateWidget<SearchPage> {
     );
   }
 
-  ///搜索Item
   Widget getItem(QueryDataBean bean) {
     return Row(
       children: <Widget>[

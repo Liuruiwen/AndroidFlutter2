@@ -12,7 +12,6 @@ import '../../../ApiConfirg.dart';
  */
 class RegisterPageBloc extends HttpBloc{
 
-  //====================注册================
   Future<bool> registerData(String username,String password,String repassword) async{
     return    await  postData<LoginPageBean>(ApiConfig.HTTP_REGISTER, {
       "username": username,"password": password,"repassword": repassword,

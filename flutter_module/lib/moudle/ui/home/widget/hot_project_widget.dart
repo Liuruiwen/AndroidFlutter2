@@ -6,11 +6,10 @@ import 'package:flutter_module/moudle/base/widget/WebPage.dart';
 import 'package:flutter_module/moudle/ui/home/bean/HotProjectListBean.dart';
 import 'package:flutter_module/res/Colours.dart';
 import 'package:flutter_module/res/Dimens.dart';
-
 /**
  * Created by Amuser
- * Date:2019/12/24.
- * Desc:热门项目widget
+ * Date:2019/12/18
+ * Desc:
  */
 class HotProjectWidget extends BaseFulWidget{
   NewListDataBean _dataBean;

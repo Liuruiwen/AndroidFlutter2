@@ -16,11 +16,8 @@ class TreeListPageBloc extends HttpBloc{
   int _page = 1;
   bool isResult = true;
 
-  //====================体系文章列表================
-  ///数据存储
   BehaviorSubject<List<TreeListPageData>> _treeList = BehaviorSubject<List<TreeListPageData>>();
   Stream<List<TreeListPageData>> get treeStream => _treeList.stream;
-  ///是否加载完成
   BehaviorSubject<bool> _isLoading = BehaviorSubject<bool>();
   Stream<bool> get loadingStream => _isLoading.stream;
 
@@ -40,13 +37,17 @@ class TreeListPageBloc extends HttpBloc{
             "$_page/json?cid=$id", (data) {
       if (data != null) {
         TreeListPageBean bean = data;
-        if (bean.datas != null && bean.datas.length > 0) {
-          isResult = true;
-          _listBean.addAll(bean.datas);
-          _treeList.add(_listBean);
-        } else {
-          _isLoading.add(true);
-          isResult = false;
+        if (bean.datas != null) {
+          if(bean.datas.length>0){
+            isResult = true;
+            _isLoading.add(false);
+            _listBean.addAll(bean.datas);
+            _treeList.add(_listBean);
+          }else{
+            isResult = false;
+            _isLoading.add(true);
+            _treeList.add(_listBean);
+          }
         }
       } else {
         isResult = false;

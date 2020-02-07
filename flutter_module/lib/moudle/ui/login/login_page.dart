@@ -38,7 +38,6 @@ class LoginPage extends BaseFulWidget {
 class _LoginPage extends BaseStateWidget<LoginPage> {
   final TextEditingController etControllerUser = TextEditingController();
   final TextEditingController etControllerUserPwd = TextEditingController();
-//  MethodChannel _methodChannel = MethodChannel(Common.CONNECT_CONTEXT); //与android连接
   LoginPageBloc _bloc;
   AppBloc _appBloc;
   Matrix4 matrix4;
@@ -74,9 +73,7 @@ class _LoginPage extends BaseStateWidget<LoginPage> {
           }
           break;
     }});
-//    _appBloc.getMethodChannel().setMethodCallHandler(_handler);
   }
-  //接收android监听
   Future<dynamic> _handler(MethodCall call) async{
     switch (call.method) {
       case 'login':

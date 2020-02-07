@@ -30,7 +30,6 @@ class _MyApp extends State<MyApp>{
     _bloc.getMethodChannel().setMethodCallHandler(_handler);
   }
 
-  ////接收android监听
   Future<dynamic> _handler(MethodCall call){
     switch (call.method) {
       default:
@@ -78,51 +77,4 @@ class _MyApp extends State<MyApp>{
   }
 }
 
-//class MyApps extends StatelessWidget {
-//  // This widget is the root of your application.
-//  @override
-//  Widget build(BuildContext context) {
-//    AppBloc _bloc=BlocProvider.of<AppBloc>(context);
-//    _bloc.initData(context);
-//    return StreamBuilder<AppCode>(
-//        stream: _bloc.themeStream,
-//        initialData: _bloc.getAppCode(),
-//        builder: (context,nab){
-//          return MaterialApp(
-//            title: 'Flutter Demo',
-//            theme: ThemeData(
-//              primarySwatch: nab.data.appThemeColor,
-//            ),
-//            home: _getHomeWidget(window.defaultRouteName),
-//          );
-//        });
-//
-//  }
-//
-//  Widget _getHomeWidget(String route){
-//    switch (route){
-//      case "main":
-//        return MainPage();
-//      default:
-//        return MainPage();
-//    }
-//  }
-//}
-
-class  StateError extends StatelessWidget{
-  @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("提示"),
-        centerTitle: true,
-      ),
-      body: Center(
-        child: Text("没有找到界面哦"),
-      ),
-    );
-  }
-
-}
 

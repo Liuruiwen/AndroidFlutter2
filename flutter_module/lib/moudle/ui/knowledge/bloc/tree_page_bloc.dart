@@ -13,11 +13,8 @@ import '../../../ApiConfirg.dart';
 class TreePageBloc extends HttpBloc{
 
 
-  //====================导航数据================
-  ///数据存储
   BehaviorSubject<List<TreePageBean>> _treeList = BehaviorSubject<List<TreePageBean>>();
   Stream<List<TreePageBean>> get treeStream => _treeList.stream;
-  ///导航数据列表
   BehaviorSubject<List<Children>> _childrenList = BehaviorSubject<List<Children>>();
   Stream<List<Children>> get childrenStream => _childrenList.stream;
   getTreeData() async {
@@ -38,6 +35,9 @@ class TreePageBloc extends HttpBloc{
   @override
   void dispose() {
     // TODO: implement dispose
+    _treeList.close();
+    _childrenList.close();
+
   }
 
   @override

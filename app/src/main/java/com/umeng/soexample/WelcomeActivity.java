@@ -39,7 +39,13 @@ public class WelcomeActivity extends BaseActivity {
         timer = new CountDownTimer(3000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
-                tvClick.setText(String.format("跳转%1$s", millisUntilFinished / 1000));
+                int count= (int) (millisUntilFinished / 1000);
+                if(count<1){
+                    tvClick.setText("跳转");
+                    return;
+                }
+
+                tvClick.setText(String.format("跳转%1$s",count));
             }
 
             @Override

@@ -1,7 +1,7 @@
 /**
  * Created by Amuser
- * Date:2020/1/4.
- * Desc:搜索热词
+ * Date:2019/12/18.
+ * Desc:
  */
 class SeachHotKeyBean {
   int id;

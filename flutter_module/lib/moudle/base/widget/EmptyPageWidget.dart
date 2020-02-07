@@ -3,8 +3,8 @@ import 'package:flutter_module/res/Dimens.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 /**
  * Created by Amuser
- * Date:2019/12/31.
- * Desc:缺省页
+ * Date:2019/12/20.
+ * Desc:
  */
 class EmptyPageWidget extends StatelessWidget{
   @override
@@ -18,7 +18,7 @@ class EmptyPageWidget extends StatelessWidget{
           children: <Widget>[
             new Container(
               child: new Image(
-                image: new AssetImage('image/gift_bill_list_empty.png'),
+                image: new AssetImage('drawable/image/gift_bill_list_empty.png'),
                 width: MediaQuery
                     .of(context)
                     .size
@@ -28,7 +28,7 @@ class EmptyPageWidget extends StatelessWidget{
               ),
               margin: EdgeInsets.only(left: 80, right: 80, bottom: 30),
             ),
-            new Expanded(child:   new Text(""),)
+            new Expanded(child:   new Text("亲，没有数据哦！",style: TextStyle(fontSize: ScreenUtil.getInstance().setSp(Dimens.sp30)),),)
 
           ],
         ),

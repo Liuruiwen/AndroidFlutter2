@@ -5,5 +5,5 @@
  */
  class Common{
   static const BASE_URL = "https://www.wanandroid.com/";
-  static String CONNECT_CONTEXT="com.umeng.soexample";//与Android交互的关键字
+  static String CONNECT_CONTEXT="com.umeng.soexample";
  }

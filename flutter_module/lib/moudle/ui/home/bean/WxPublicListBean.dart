@@ -1,9 +1,8 @@
 /**
  * Created by Amuser
- * Date:2019/12/30.
+ * Date:2019/12/18.
  * Desc:
  */
-
 class WxPublicListBean {
   int _curPage;
   List<WxPublicItemBean> _datas;

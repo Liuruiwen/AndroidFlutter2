@@ -19,8 +19,8 @@ class MyselfPage extends BaseFulWidget{
 }
 
 class _MyselfPage extends BaseWidget<MyselfPage> with SingleTickerProviderStateMixin{
-  AnimationController _controller; //动画控制器
-  Animation _animation; //动画执行
+  AnimationController _controller; 
+  Animation _animation;
     @override
   String getTitle() {
     // TODO: implement getTitle
@@ -35,8 +35,7 @@ class _MyselfPage extends BaseWidget<MyselfPage> with SingleTickerProviderStateM
         AnimationController(
             duration: Duration(milliseconds: (600).round()),
             vsync: this);
-//    _animation =
-//        Tween(begin: Offset(0, 0), end: Offset(0, -1)).animate(_controller);
+
     _animation = Tween(begin: 0.0, end: 1.0).animate(_controller);
     _controller.addListener((){
       setState(() {
@@ -49,7 +48,6 @@ class _MyselfPage extends BaseWidget<MyselfPage> with SingleTickerProviderStateM
 
       }
     });
-//    _controller.forward();
   }
 
   @override
@@ -59,8 +57,6 @@ class _MyselfPage extends BaseWidget<MyselfPage> with SingleTickerProviderStateM
       color: Colors.white,
       child:Column(children: <Widget>[
         FlatButton(onPressed: (){
-          print("动画是否进行========");
-//          _controller.reset();
           _controller.forward();
         }, child: Text("加载动画")),
         Container(

@@ -5,9 +5,9 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 
 /**
- * Created :Auser
- *  Date: 2019/5/6.
- *  Desc:widget基类
+ * Created by Amuser
+ * Date:2019/12/12.
+ * Desc:
  */
 abstract class BaseFulWidget  extends StatefulWidget {
 

@@ -1,6 +1,6 @@
 /**
  * Created by Amuser
- * Date:2020/1/5.
+ * Date:2019/12/18.
  * Desc:
  */
 class QueryListBean {

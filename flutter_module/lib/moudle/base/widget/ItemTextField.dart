@@ -2,14 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_module/res/Colours.dart';
 import 'package:flutter_module/res/Dimens.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 /**
- *
- * http://www.imooc.com/article/285750  flutter sp
  * Created by Amuser
- * Date:2019/7/28.
+ * Date:2019/12/16.
  * Desc:
  */
-
 class ItemTextField extends StatefulWidget {
   final TextEditingController controller;
   final IconData prefixIcon;
@@ -104,7 +102,6 @@ class ItemTextFiledState extends State<ItemTextField> {
         enabledBorder: new UnderlineInputBorder(
             borderSide: new BorderSide(color: Colours.green_de)),
       ),
-      //文本对齐方式
       style: TextStyle(
           fontSize: ScreenUtil.getInstance().setSp(Dimens.sp30),
           color: Colors.white), //输入文本的样式

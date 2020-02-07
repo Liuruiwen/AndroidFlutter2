@@ -14,7 +14,6 @@ import 'package:flutter_module/res/Colours.dart';
 import 'package:flutter_module/res/Dimens.dart';
 import 'package:flutter_module/util/SpUntil.dart';
 
-import '../../../Common.dart';
 import 'about_me_page.dart';
 
 /**
@@ -47,7 +46,6 @@ class _PersonPage extends PageStateWidget<PersonPage>{
         case 'login_out'://退出登录
           setState(() {});
           var msg = call.arguments;
-          print("=======看看===${msg.toString()}");
           if(msg.toString()=="ok"){
             _loginOut();
           }
@@ -58,25 +56,6 @@ class _PersonPage extends PageStateWidget<PersonPage>{
     
   }
 
-////接收android监听
-  Future<dynamic> _handler(MethodCall call){
-    switch (call.method) {
-      case 'login_out'://退出登录
-      setState(() {});
-        var msg = call.arguments;
-        print("=======看看===${msg.toString()}");
-        if(msg.toString()=="ok"){
-          _loginOut();
-        }
-
-        break;
-      case 'login':
-        setState(() {});
-        _appBloc.addMethodCall(call);
-
-        break;
-    }
-  }
 
 
   @override
@@ -98,7 +77,6 @@ class _PersonPage extends PageStateWidget<PersonPage>{
         getStateWidget(),
         _getHead(bean),
         _getItem("用户详情", () {
-//          pushWidget(widget._context, new MyselfPage());
           bean!=null
               ? pushWidget(widget._context, new UserInfoPage())
               : _loginOut();
@@ -181,9 +159,7 @@ class _PersonPage extends PageStateWidget<PersonPage>{
     );
   }
 
-  /**
-   * 退出登录
-   */
+
   _loginOut() async{
    await  SpUntil.instance.spClear(SpUntil.SP_LOGIN);
    _appBloc.addLoginData(null);

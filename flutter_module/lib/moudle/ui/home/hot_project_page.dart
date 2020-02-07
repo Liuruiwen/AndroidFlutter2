@@ -7,14 +7,13 @@ import 'package:flutter_module/moudle/base/BaseStateWidget.dart';
 import 'package:flutter_module/moudle/ui/home/bean/HotProjectBean.dart';
 import 'package:flutter_module/moudle/ui/home/bloc/hot_project_page_bloc.dart';
 import 'package:flutter_module/moudle/ui/home/project_body_page.dart';
-import 'package:flutter_module/moudle/ui/home/widget/hot_project_widget.dart';
 
 import 'bloc/project_body_page_bloc.dart';
 
 /**
  * Created by Amuser
- * Date:2019/12/22.
- * Desc:热门项目
+ * Date:2019/12/18.
+ * Desc:
  */
 class HotProjectPage extends BaseFulWidget {
   @override
@@ -42,52 +41,6 @@ class _HotProjectPage extends BaseStateWidget<HotProjectPage>
   Widget getBuildWidget(BuildContext buildContext) {
     // TODO: implement getBuildWidget
     return _getBody();
-//    return StreamBuilder<List<HotProjectBean>>(
-//        stream: _bloc.projectStream,
-//        builder: (context, nbs) {
-//          if (nbs.data != null) {
-//            List<Widget> _list = nbs.data?.map((item) {
-//              return new Tab(
-//                child: Text(item.name),
-//              );
-//            })?.toList();
-//
-//            List<Widget> _listBody = nbs.data?.map((item) {
-////              return _getBody(item.name);
-//              return BlocProvider(
-//                  child: ProjectBodyWidget(item.id, context),
-//                  bloc: ProjectBodyPageBloc());
-//            })?.toList();
-//            return DefaultTabController(
-//                length: _list.length,
-//                child: Scaffold(
-//                  appBar: AppBar(
-//                    leading: GestureDetector(
-//                      child: new Align(
-//                        alignment: Alignment.center,
-//                        child: new Icon(Icons.keyboard_arrow_left, size: 30),
-//                      ),
-//                      onTap: () {
-//                        closeWidget();
-//                      },
-//                    ),
-//                    title: Text("热门项目"),
-//                    centerTitle: true,
-//                    bottom: new TabBar(
-//                      tabs: _list,
-//                      unselectedLabelColor: Colors.white30,
-//                      isScrollable: true,
-//                      labelColor: Colors.white,
-//                      labelStyle: TextStyle(fontSize: 18),
-//                      unselectedLabelStyle: TextStyle(fontSize: 15),
-//                      indicatorColor: Colors.blue,
-//                    ),
-//                  ),
-//                  body: TabBarView(children: _listBody),
-//                ));
-//          }
-//          return Container();
-//        });
   }
 
   Widget _getBody() {
@@ -121,7 +74,6 @@ class _HotProjectPage extends BaseStateWidget<HotProjectPage>
                 })?.toList();
 
                 List<Widget> _listBody = nbs.data?.map((item) {
-//              return _getBody(item.name);
                   return BlocProvider(
                       child: ProjectBodyWidget(item.id, context),
                       bloc: ProjectBodyPageBloc());

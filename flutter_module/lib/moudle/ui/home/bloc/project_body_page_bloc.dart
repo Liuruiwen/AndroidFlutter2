@@ -7,8 +7,8 @@ import '../../../ApiConfirg.dart';
 
 /**
  * Created by Amuser
- * Date:2019/12/22.
- * Desc:热门项目
+ * Date:2019/12/16.
+ * Desc:
  */
 class ProjectBodyPageBloc extends HttpBloc {
 
@@ -16,14 +16,11 @@ class ProjectBodyPageBloc extends HttpBloc {
   int _page = 1;
   bool isResult = true;
 
-  //====================热门项目================
-  ///数据存储
   BehaviorSubject<List<NewListDataBean>> _projectList =
       BehaviorSubject<List<NewListDataBean>>();
 
   Stream<List<NewListDataBean>> get projectStream => _projectList.stream;
 
-  ///是否加载完成
   BehaviorSubject<bool> _isLoading = BehaviorSubject<bool>();
 
   Stream<bool> get loadingStream => _isLoading.stream;
@@ -37,7 +34,6 @@ class ProjectBodyPageBloc extends HttpBloc {
         break;
       case 2:
         isResult == true ? _page++ : _page;
-        print("=======页面$_page");
         break;
     }
     await getData<HotProjectListBean>(
@@ -47,13 +43,15 @@ class ProjectBodyPageBloc extends HttpBloc {
             "/json?cid=$id", (data) {
       if (data != null) {
         HotProjectListBean bean = data;
-        if (bean.datas != null && bean.datas.length > 0) {
-          isResult = true;
-          _listBean.addAll(bean.datas);
-          _projectList.add(_listBean);
-        } else {
-          _isLoading.add(true);
-          isResult = false;
+        if (bean.datas != null) {
+          if(bean.datas.length>0){
+            isResult = true;
+            _listBean.addAll(bean.datas);
+            _projectList.add(_listBean);
+          }else{
+            _isLoading.add(true);
+            isResult = false;
+          }
         }
       } else {
         isResult = false;
@@ -68,6 +66,7 @@ class ProjectBodyPageBloc extends HttpBloc {
       _listBean.clear();
     }
     _projectList.close();
+    _isLoading.close();
   }
 
 

@@ -5,7 +5,7 @@ import 'BaseFulWidget.dart';
 
 /**
  * Created by Amuser
- * Date:2019/12/19.
+ * Date:2019/12/14.
  * Desc:
  */
 class  PageStateWidget<T extends BaseFulWidget> extends BaseStateWidget<T> with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin{

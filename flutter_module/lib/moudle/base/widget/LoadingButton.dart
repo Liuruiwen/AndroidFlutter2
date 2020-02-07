@@ -3,12 +3,12 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_module/res/Dimens.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+typedef Future onLoadingFinish();
 /**
  * Created by Amuser
- * Date:2020/1/12.
+ * Date:2019/12/26.
  * Desc:
  */
-typedef Future onLoadingFinish();
 class LoadingButton extends StatefulWidget{
   int _state=1;
   int _animateWidth=0;
@@ -26,8 +26,8 @@ class LoadingButton extends StatefulWidget{
 
 }
 class _LoadingButton extends State<LoadingButton> with SingleTickerProviderStateMixin{
-  AnimationController _controller; //动画控制器
-  Animation _animation; //动画执行
+  AnimationController _controller;
+  Animation _animation;
   @override
   void initState() {
     // TODO: implement initState
@@ -60,8 +60,6 @@ class _LoadingButton extends State<LoadingButton> with SingleTickerProviderState
       child: GestureDetector(
         child: Container(
           alignment: Alignment.center,
-//            transform: Matrix4.identity()
-//              ..scale(_animateX,_animateY, _animateZ),
           height:getWidth(Dimens.dp100),
           width:widget._animateWidth==0? MediaQuery
               .of(context)
@@ -118,11 +116,9 @@ class _LoadingButton extends State<LoadingButton> with SingleTickerProviderState
     }
   }
 
-  //获取宽度
   getWidth(int width){
     return ScreenUtil.getInstance().setWidth(width);
   }
-  ///获取高度
   double  getHeight(int height){
     return ScreenUtil.getInstance().setHeight(height);
   }
@@ -146,24 +142,16 @@ class LoadingFinish extends CustomPainter{
   void paint(Canvas canvas, Size size) {
     Paint _paint = Paint()
       ..color = Colors.white//画笔颜色
-//      ..strokeCap = StrokeCap.round //画笔笔头类型
-//      ..isAntiAlias = false //是否开启抗锯齿
-////      ..blendMode = BlendMode.src//颜色混合模式
       ..style = PaintingStyle.stroke //画笔样式，默认为填充
-//      ..colorFilter = ColorFilter.mode(Colors.red,
-////          BlendMode.src) //颜色渲染模式
-////      ..maskFilter = MaskFilter.blur(BlurStyle.inner, 3.0) //模糊遮罩效果
-//      ..filterQuality = FilterQuality.high //颜色渲染模式的质量
       ..strokeWidth = 4.0; //画笔的宽度
 
     var path = Path();
-    path.lineTo(20/3*_animateValue,50/3*_animateValue);
+    path.lineTo(20/3*_animateValue,40/3*_animateValue);
     path.lineTo(100/3*_animateValue,10/3*_animateValue);
     canvas.drawPath(path, _paint);
   }
 
 
-  //刷新布局的时候告诉flutter 是否需要重绘
   @override
   bool shouldRepaint(CustomPainter oldDelegate) {
     return true;

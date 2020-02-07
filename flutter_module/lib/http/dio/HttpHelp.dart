@@ -1,22 +1,21 @@
 
 import 'package:cookie_jar/cookie_jar.dart';
-/**
- * Created by Amuser
- * Date:2019/10/26.
- * Desc:https://www.jianshu.com/p/1352351c7d08   dio详解
- */
 
 import 'package:dio/dio.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'dart:convert';
-//import 'package:cookie_jar/cookie_jar.dart';
 
 import '../../Common.dart';
 import '../BaseBean.dart';
 import 'GlobalConfig.dart';
 import 'ResultCode.dart';
+/**
+ * Created by Amuser
+ * Date:2019/12/6.
+ * Desc:
+ */
 class HttpHelp {
 
   static HttpHelp _instance;
@@ -74,34 +73,27 @@ class HttpHelp {
       }
 
     }on DioError catch(error) {
-      // 请求错误处理
       Response errorResponse;
       if (error.response != null) {
         errorResponse = error.response;
       } else {
         errorResponse = new Response(statusCode: 666);
       }
-      // 请求超时
       if (error.type == DioErrorType.CONNECT_TIMEOUT) {
         errorResponse.statusCode = ResultCode.CONNECT_TIMEOUT;
       }
-      // 一般服务器错误
       else if (error.type == DioErrorType.RECEIVE_TIMEOUT) {
         errorResponse.statusCode = ResultCode.RECEIVE_TIMEOUT;
       }
-
-      // debug模式才打印
       if (GlobalConfig.isDebug) {
         print('请求异常: ' + error.toString());
         print('请求异常url: ' + url);
         print('请求头: ' + dio.options.headers.toString());
-//        print('method: ' + dio.options.method);
       }
       showToast( error.message);
       _error(errorCallBack, error.message);
       return false;
     }
-    // debug模式打印相关数据
     if (GlobalConfig.isDebug) {
       print('请求url: ' + url);
       print('请求头: ' + dio.options.headers.toString());
@@ -125,7 +117,6 @@ class HttpHelp {
         successCallBack(bean.data??null);
         return true;
       }else{
-        //I/flutter (12534): {"data":null,"errorCode":-1,"errorMsg":"账号密码不匹配！"}
         if(isToast==true){
           return false;
         }

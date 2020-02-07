@@ -14,8 +14,8 @@ import 'bloc/wx_public_list_bloc.dart';
 
 /**
  * Created by Amuser
- * Date:2019/12/30.
- * Desc:公众号列表
+ * Date:2019/12/20.
+ * Desc:
  */
 class WxPublicList extends BaseFulWidget {
   final String _title;
@@ -33,7 +33,6 @@ class WxPublicList extends BaseFulWidget {
 
 class _WxPublicList extends BaseStateWidget<WxPublicList> {
   WxPublicListBloc _bloc;
-
   @override
   void initState() {
     // TODO: implement initState
@@ -41,6 +40,15 @@ class _WxPublicList extends BaseStateWidget<WxPublicList> {
     _bloc = BlocProvider.of<WxPublicListBloc>(context);
     WidgetsBinding.instance
         .addPostFrameCallback((_) => _bloc.onRefresh(context, widget._id));
+  }
+
+
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+
   }
 
   @override
@@ -181,6 +189,7 @@ class _WxPublicList extends BaseStateWidget<WxPublicList> {
       ],
     );
   }
+
 
   _onRefresh() async {
     await _bloc.getWxPublic(1, widget._id);

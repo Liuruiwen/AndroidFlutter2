@@ -12,9 +12,6 @@ import '../../../ApiConfirg.dart';
  */
 class LoginPageBloc extends HttpBloc{
 
-  //====================登录================
-//  BehaviorSubject<LoginPageBean> _loginList = BehaviorSubject<List<NaiBean>>();
-//  Stream<List<NaiBean>> get loginStream => _loginList.stream;
 
  Future<bool> loginData(String username,String password,[bool isToast,String headImage=null,String openid=null]) async{
     return    await  postData<LoginPageBean>(ApiConfig.HTTP_LOGIN, {
@@ -24,9 +21,7 @@ class LoginPageBloc extends HttpBloc{
         LoginPageBean bean=data;
         bean.headImage=headImage;
         bean.openid=openid;
-        print("===========${bean.openid}========${bean.headImage}");
         SpUntil.instance.spString(SpUntil.SP_LOGIN, convert.jsonEncode(bean.toJson()));
-        print("进来了哦========登录成功${convert.jsonEncode(bean.toJson())}");
          return true;
       }
 
@@ -35,7 +30,6 @@ class LoginPageBloc extends HttpBloc{
   }
 
 
- //====================注册================
  Future<bool> registerData(String username,String password,String repassword) async{
    return    await  postData<LoginPageBean>(ApiConfig.HTTP_REGISTER, {
      "username": username,"password": password,"repassword": repassword,

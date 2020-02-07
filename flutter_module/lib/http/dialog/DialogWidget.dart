@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 
+
 /**
  * Created by Amuser
- * Date:2019/7/4.
- * Desc:弹窗案列
- * https://www.jianshu.com/p/4bbbb5aa855d
- * https://www.jianshu.com/p/52e0cce2be0a
+ * Date:2019/12/6.
+ * Desc:
  */
-
  class DialogWidget extends Dialog{
    String text;
 
@@ -15,9 +13,9 @@ import 'package:flutter/material.dart';
 
    @override
    Widget build(BuildContext context) {
-     return new Material( //创建透明层
-       type: MaterialType.transparency, //透明类型
-       child: new Center( //保证控件居中效果
+     return new Material(
+       type: MaterialType.transparency,
+       child: new Center( 
          child: new SizedBox(
            width: 120.0,
            height: 120.0,

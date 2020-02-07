@@ -13,11 +13,8 @@ import '../../../ApiConfirg.dart';
 class KnowledgePageBloc extends HttpBloc{
 
 
-  //====================导航数据================
-  ///数据存储
   BehaviorSubject<List<NaiBean>> _naiList = BehaviorSubject<List<NaiBean>>();
   Stream<List<NaiBean>> get naiStream => _naiList.stream;
-  ///导航数据列表
   BehaviorSubject<List<Articles>> _articlesList = BehaviorSubject<List<Articles>>();
   Stream<List<Articles>> get articlesStream => _articlesList.stream;
   getNaiData() async {
@@ -40,6 +37,8 @@ class KnowledgePageBloc extends HttpBloc{
   @override
   void dispose() {
     // TODO: implement dispose
+    _naiList.close();
+    _articlesList.close();
   }
 
   @override

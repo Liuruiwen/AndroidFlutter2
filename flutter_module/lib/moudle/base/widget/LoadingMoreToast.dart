@@ -3,8 +3,8 @@ import 'package:flutter_module/res/Dimens.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 /**
  * Created by Amuser
- * Date:2019/12/25.
- * Desc:加载更多
+ * Date:2019/12/22.
+ * Desc:
  */
 class LoadingMoreToast extends  StatelessWidget{
   Stream<bool> _isLoading;

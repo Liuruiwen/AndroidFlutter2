@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 /**
  * Created by Amuser
- * Date:2019/8/1.
- * Desc:圆形头像
+ * Date:2019/12/16.
+ * Desc:
  */
 class CircleImage extends  StatelessWidget {
 
@@ -20,9 +20,7 @@ class CircleImage extends  StatelessWidget {
     return _getCircleImage();
   }
 
-  /**
-   * 获取圆型头像
-   */
+
   Widget _getCircleImage(){
 
    return new Container(

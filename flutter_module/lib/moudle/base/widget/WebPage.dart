@@ -10,12 +10,12 @@ import 'package:flutter_module/moudle/base/BaseStateWidget.dart';
 import 'package:flutter_module/res/Dimens.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'dart:convert' as convert;
+
 /**
  * Created by Amuser
- * Date:2020/1/7.
+ * Date:2019/12/23.
  * Desc:
  */
-
 class WebPage extends BaseFulWidget{
   String _url;
   String _tilte;
@@ -39,14 +39,13 @@ class _WebPage extends BaseStateWidget<WebPage>{
     super.initState();
     _appBloc=BlocProvider.of<AppBloc>(context);
     onStateChanged = flutterWebViewPlugin.onStateChanged.listen((WebViewStateChanged state){
-      // state.type是一个枚举类型，取值有：WebViewState.shouldStart, WebViewState.startLoad, WebViewState.finishLoad
       switch (state.type) {
-        case WebViewState.shouldStart:// 准备加载
+        case WebViewState.shouldStart:
 
           break;
-        case WebViewState.startLoad:// 开始加载
+        case WebViewState.startLoad:
           break;
-        case WebViewState.finishLoad:// 加载完成
+        case WebViewState.finishLoad:
              flutterWebViewPlugin.evalJavascript("document.title").then((result){
                setState(() {
                  if(result!='""'){

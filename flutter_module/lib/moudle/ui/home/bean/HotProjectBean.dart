@@ -1,12 +1,9 @@
 
-
 /**
  * Created by Amuser
- * Date:2019/12/22.
+ * Date:2019/12/15.
  * Desc:
  */
-
-
 class HotProjectBean {
   List<dynamic> children;
   int courseId;

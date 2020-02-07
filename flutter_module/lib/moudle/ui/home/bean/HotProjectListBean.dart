@@ -1,11 +1,10 @@
-/**
- * Created by Amuser
- * Date:2019/8/8.
- * Desc:
- */
 
 import 'package:json_annotation/json_annotation.dart';
-
+/**
+ * Created by Amuser
+ * Date:2019/12/15.
+ * Desc:
+ */
 @JsonSerializable()
 class HotProjectListBean extends Object {
 

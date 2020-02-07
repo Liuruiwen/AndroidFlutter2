@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_module/res/Colours.dart';
 import 'package:flutter_module/res/styles.dart';
-
 /**
  * Created by Amuser
- * Date:2019/8/24.
- * Desc:自适应表格布局
+ * Date:2019/12/20.
+ * Desc:
  */
 class ChipsTitle extends StatelessWidget {
   const ChipsTitle({
@@ -17,7 +16,6 @@ class ChipsTitle extends StatelessWidget {
   final String label;
   final List<Widget> children;
 
-  // Wraps a list of chips into a ListTile for display as a section in the demo.
   @override
   Widget build(BuildContext context) {
     final List<Widget> cardChildren = <Widget>[

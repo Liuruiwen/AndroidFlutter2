@@ -18,11 +18,8 @@ class WxPublicListBloc extends HttpBloc {
   int _page = 1;
   bool isResult = true;
 
-  //====================热门项目================
-  ///数据存储
   BehaviorSubject<List<WxPublicItemBean>> _publicList = BehaviorSubject<List<WxPublicItemBean>>();
   Stream<List<WxPublicItemBean>> get publicStream => _publicList.stream;
-  ///是否加载完成
   BehaviorSubject<bool> _isLoading = BehaviorSubject<bool>();
   Stream<bool> get loadingStream => _isLoading.stream;
 
@@ -42,13 +39,15 @@ class WxPublicListBloc extends HttpBloc {
             "/$id/$_page/json", (data) {
       if (data != null) {
         WxPublicListBean bean = data;
-        if (bean.datas != null && bean.datas.length > 0) {
-          isResult = true;
-          _listBean.addAll(bean.datas);
-          _publicList.add(_listBean);
-        } else {
-          _isLoading.add(true);
-          isResult = false;
+        if (bean.datas != null) {
+          if(bean.datas.length>0){
+            isResult = true;
+            _listBean.addAll(bean.datas);
+            _publicList.add(_listBean);
+          }else{
+            _isLoading.add(true);
+            isResult = false;
+          }
         }
       } else {
         isResult = false;
@@ -63,6 +62,7 @@ class WxPublicListBloc extends HttpBloc {
       _listBean.clear();
     }
     _publicList.close();
+    _isLoading.close();
   }
 
 

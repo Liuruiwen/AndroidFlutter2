@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_module/bloc/BlocBase.dart';
 
@@ -7,8 +6,8 @@ import 'dio/HttpHelp.dart';
 
 /**
  * Created by Amuser
- * Date:2019/10/19.
- * Desc:Http请求状态管理
+ * Date:2019/12/10.
+ * Desc:
  */
 abstract class HttpBloc extends BlocBase {
   BuildContext mContext;
@@ -39,7 +38,7 @@ abstract class HttpBloc extends BlocBase {
 
   showDialogs(BuildContext context) async {
     await showDialog<Null>(
-        context: context, //BuildContext对象
+        context: context,
         barrierDismissible: false,
         builder: (BuildContext context) {
           return new DialogWidget(text: "正在加载...");

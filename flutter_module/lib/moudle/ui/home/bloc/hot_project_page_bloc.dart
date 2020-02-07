@@ -7,13 +7,12 @@ import '../../../ApiConfirg.dart';
 
 /**
  * Created by Amuser
- * Date:2019/12/22.
- * Desc:热门项目
+ * Date:2019/12/16.
+ * Desc:
  */
 class HotProjectPageBloc extends HttpBloc{
 
 
-  //====================tab================
   BehaviorSubject<List<HotProjectBean>>  _project=BehaviorSubject<List<HotProjectBean>>();
   Stream<List<HotProjectBean>> get  projectStream=>_project.stream;
   getProjectMenu()async{
@@ -26,6 +25,7 @@ class HotProjectPageBloc extends HttpBloc{
   @override
   void dispose() {
     // TODO: implement dispose
+    _project.close();
   }
 
   @override

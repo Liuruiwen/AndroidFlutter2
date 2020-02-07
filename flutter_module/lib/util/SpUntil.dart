@@ -6,25 +6,17 @@ import 'package:shared_preferences/shared_preferences.dart';
  * Desc:内存储
  */
 class SpUntil {
-  /**
-   * ================存储的key  start============
-   */
+
   static String SP_LOGIN = "sp_login";
 
-  /**
-   * ================存储的key  end============
-   */
 
-  // 工厂模式
   factory SpUntil() => _getInstance();
 
   static SpUntil get instance =>  _getInstance();
   static SpUntil _instance;
 
   SpUntil._internal() {
-    // 初始化
 
-//    _getSpInstance();
   }
 
   static SpUntil _getInstance() {
@@ -46,7 +38,6 @@ class SpUntil {
     ;
   }
 
-  ///=============存================
   spString(String key, String value) async{
     spInstance.setString(key, value);
   }
@@ -67,7 +58,6 @@ class SpUntil {
     spInstance.setStringList(key, value);
   }
 
-  ///=============取================
   Future<String> getSpString(String key) async{
     return spInstance.get(key) ?? null;
   }
@@ -87,7 +77,6 @@ class SpUntil {
   List<String> getSpStringList(String key) {
     return spInstance.getStringList(key);
   }
-  ///==============清除====================
    Future<bool> spClear(String key) async{
     return spInstance.remove(key);
   }

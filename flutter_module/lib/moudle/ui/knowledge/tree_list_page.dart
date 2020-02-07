@@ -89,7 +89,7 @@ class _TreeListPage extends BaseStateWidget<TreeListPage> {
                         bottom: BorderSide(width: 1, color: Colours.divider))),
               );
             }).toList();
-            if (_ListWidget != null && _ListWidget.length > 10) {
+            if (_ListWidget != null&& nbs.data.length>=10) {
               _ListWidget.add(Container(
                 child:  LoadingMoreToast(_bloc.loadingStream),
               ));
@@ -153,6 +153,7 @@ class _TreeListPage extends BaseStateWidget<TreeListPage> {
                       ),
                       alignment: Alignment.topLeft,
                     ),
+                    Container(height: getHeight(Dimens.dp20),),
                     Row(
                       children: <Widget>[
                         new Text(

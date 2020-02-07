@@ -15,8 +15,6 @@ import '../../../ApiConfirg.dart';
 class SearchPageBloc extends HttpBloc{
 
 
-  //====================搜素热词================
-  ///数据存储
   BehaviorSubject<List<SeachHotKeyBean>> _searchList = BehaviorSubject<List<SeachHotKeyBean>>();
   Stream<List<SeachHotKeyBean>> get hotStream => _searchList.stream;
   getHotKeyData() async {
@@ -31,14 +29,11 @@ class SearchPageBloc extends HttpBloc{
   }
 
 
-  //====================搜素关键字================
   List<QueryDataBean> _listBean = new List();
   int _page = 1;
   bool isResult = true;
-  ///是否加载完成
   BehaviorSubject<bool> _isLoading = BehaviorSubject<bool>();
   Stream<bool> get loadingStream => _isLoading.stream;
-  ///数据存储
   BehaviorSubject<List<QueryDataBean>> _queryList = BehaviorSubject<List<QueryDataBean>>();
   Stream<List<QueryDataBean>> get queryStream => _queryList.stream;
   getQueryData(String key,int type) async {
@@ -57,13 +52,15 @@ class SearchPageBloc extends HttpBloc{
     }, (data){
       if (data != null) {
         QueryListBean bean = data;
-        if (bean.datas != null && bean.datas.length > 0) {
-          isResult = true;
-          _listBean.addAll(bean.datas);
-          _queryList.add(_listBean);
-        } else {
-          _isLoading.add(true);
-          isResult = false;
+        if (bean.datas != null) {
+          if(bean.datas.length>0){
+            isResult = true;
+            _listBean.addAll(bean.datas);
+            _queryList.add(_listBean);
+          }else{
+            _isLoading.add(true);
+            isResult = false;
+          }
         }
       } else {
         isResult = false;
@@ -90,6 +87,7 @@ class SearchPageBloc extends HttpBloc{
   void dispose() {
     // TODO: implement dispose
     _searchList.close();
+    _isLoading.close();
   }
 
 }

@@ -2,7 +2,6 @@ import 'dart:ui';
 
 import 'package:banner_view/banner_view.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_module/bloc/AppBloc.dart';
 import 'package:flutter_module/bloc/BlocBase.dart';
 import 'package:flutter_module/moudle/base/BaseFulWidget.dart';
@@ -20,14 +19,12 @@ import 'package:flutter_module/moudle/ui/home/wx_public_list.dart';
 import 'package:flutter_module/res/Colours.dart';
 import 'package:flutter_module/res/Dimens.dart';
 import 'package:flutter_module/util/CommonUtil.dart';
-import '../../../Common.dart';
 import 'bean/ChaptersBean.dart';
 import 'bloc/wx_public_list_bloc.dart';
-
 /**
  * Created by Amuser
- * Date:2019/12/15.
- * Desc:首页
+ * Date:2019/12/16.
+ * Desc:
  */
 class HomePage extends BaseFulWidget {
   BuildContext _context;
@@ -47,7 +44,6 @@ class _HomePage extends PageStateWidget<HomePage> {
   ScrollController _scrollController;
   int _stateColor=0;
   String _city="定位中";
-//  MethodChannel _methodChannel = MethodChannel(Common.CONNECT_CONTEXT); //与android连接
 
   @override
   void initState() {
@@ -72,7 +68,7 @@ class _HomePage extends PageStateWidget<HomePage> {
         .addPostFrameCallback((_) => _bloc.initData(widget._context));
     _appBloc.faStream.listen((call){
       switch (call.method) {
-        case 'gps'://获取当前位置
+        case 'gps':
           setState(() {_city=call.arguments;});
           break;
       }
@@ -211,7 +207,6 @@ class _HomePage extends PageStateWidget<HomePage> {
         });
   }
 
-  ///===========banner图============
   Widget getBanner(List<BannerBean> list) {
     List<Widget> _list = list?.map((item) {
       return new GestureDetector(
@@ -231,7 +226,6 @@ class _HomePage extends PageStateWidget<HomePage> {
     );
   }
 
-  ///===========公众号============
   Widget _getChapters() {
     return StreamBuilder<List<ChaptersBean>>(
         stream: _bloc.chapterStream,
@@ -281,7 +275,7 @@ class _HomePage extends PageStateWidget<HomePage> {
                                     child: WxPublicList(
                                         nab.data[position].name,
                                         nab.data[position].id,
-                                        CommonUtil.getChaptersColor(position % 6)),
+                                        Colors.blue),
                                     bloc: WxPublicListBloc()));
                           },
                         );
@@ -289,7 +283,6 @@ class _HomePage extends PageStateWidget<HomePage> {
                 );
         });
   }
-  ///==========热门项目=========
   Widget _getProjectWidget() {
     return StreamBuilder<List<NewListDataBean>>(
         stream: _bloc.projectStream,
@@ -315,7 +308,6 @@ class _HomePage extends PageStateWidget<HomePage> {
         });
   }
 
-  ///=======Mark 标注=====
   Widget _getConmmonWidget<T>(
       String markName, String markMore, Stream<T> stream, Function function) {
     return StreamBuilder<T>(

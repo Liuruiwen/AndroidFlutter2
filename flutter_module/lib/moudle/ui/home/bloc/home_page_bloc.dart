@@ -6,14 +6,12 @@ import 'package:flutter_module/moudle/ui/home/bean/BannerBean.dart';
 import 'package:flutter_module/moudle/ui/home/bean/ChaptersBean.dart';
 import 'package:flutter_module/moudle/ui/home/bean/HotProjectListBean.dart';
 import 'package:rxdart/subjects.dart';
-
 /**
  * Created by Amuser
- * Date:2019/12/20.
+ * Date:2019/12/16.
  * Desc:
  */
 class HomePageBloc extends HttpBloc {
-  //====================Banner图================
   BehaviorSubject<List<BannerBean>> _banner =
       BehaviorSubject<List<BannerBean>>();
 
@@ -27,7 +25,6 @@ class HomePageBloc extends HttpBloc {
     return;
   }
 
-  ///====================公众号列表================
   BehaviorSubject<List<ChaptersBean>> _chapter =
       BehaviorSubject<List<ChaptersBean>>();
 
@@ -40,7 +37,6 @@ class HomePageBloc extends HttpBloc {
     return;
   }
 
-//====================热门项目================
   BehaviorSubject<List<NewListDataBean>> _projectList =
       BehaviorSubject<List<NewListDataBean>>();
 
@@ -63,6 +59,10 @@ class HomePageBloc extends HttpBloc {
   @override
   void dispose() {
     // TODO: implement dispose
+    _banner.close();
+    _chapter.close();
+    _projectList.close();
+
   }
 
   @override

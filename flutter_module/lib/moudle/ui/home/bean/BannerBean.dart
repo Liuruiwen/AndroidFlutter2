@@ -1,31 +1,9 @@
 import 'package:json_annotation/json_annotation.dart';
-
 /**
- * Created by Amuse
- * Date:2019/7/8.
+ * Created by Amuser
+ * Date:2019/12/15.
  * Desc:
  */
-
-//@JsonSerializable(nullable: false)
-// class BannerBean {
-////  NewsBean.fromJson(Map<String, > srcJson) : super.fromJson(srcJson);
-//   @JsonKey(name: 'data')
-//   List<Data> data;
-//
-//   @JsonKey(name: 'errorCode')
-//   int errorCode;
-//
-//   @JsonKey(name: 'errorMsg')
-//   String errorMsg;
-//
-//
-//   BannerBean(this.data, this.errorCode, this.errorMsg);
-//
-//   factory BannerBean.fromJson(Map<String, dynamic> srcJson) => _$BannerBeanFromJson(srcJson);
-//
-// }
-
-
 @JsonSerializable()
 class BannerBean  {
 

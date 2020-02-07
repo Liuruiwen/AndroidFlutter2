@@ -73,9 +73,8 @@
         <activity
             android:name="com.tencent.connect.common.AssistActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" /> <!-- umShare 相关 end -->
-        <activity android:name=".ui.LoginActivity" />
-        <activity android:name=".ui.UMShareActivity" />
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <!-- umShare 相关 end -->
     </application>
 
 </manifest>

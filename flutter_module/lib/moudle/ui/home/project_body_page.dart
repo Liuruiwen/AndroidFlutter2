@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_module/bloc/BlocBase.dart';
-import 'package:flutter_module/http/dialog/DialogWidget.dart';
 import 'package:flutter_module/moudle/base/BaseFulWidget.dart';
-import 'package:flutter_module/moudle/base/BaseStateWidget.dart';
 import 'package:flutter_module/moudle/base/PageStateWidget.dart';
 import 'package:flutter_module/moudle/base/widget/LoadingMoreToast.dart';
 import 'package:flutter_module/moudle/base/widget/RefreshWidget.dart';
@@ -15,7 +13,7 @@ import 'package:flutter_module/res/Dimens.dart';
 
 /**
  * Created by Amuser
- * Date:2019/12/24.
+ * Date:2019/12/16.
  * Desc:
  */
 class ProjectBodyWidget extends BaseFulWidget {

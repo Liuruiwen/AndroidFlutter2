@@ -4,11 +4,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_module/Common.dart';
 import 'package:flutter_module/bloc/BlocBase.dart';
-/**
- * Created by Amuser
- * Date:2020/1/13.
- * Desc:体系
- */
+
 import 'package:flutter_module/moudle/base/BaseFulWidget.dart';
 import 'package:flutter_module/moudle/base/PageStateWidget.dart';
 import 'package:flutter_module/moudle/base/widget/scroll_header/widgets/sliver_sticky_header.dart';
@@ -22,8 +18,8 @@ import 'bean/TreePageBean.dart';
 
 /**
  * Created by Amuser
- * Date:2019/12/19.
- * Desc:
+ * Date:2020/1/13.
+ * Desc:体系
  */
 class TreePage extends BaseFulWidget {
   BuildContext _context;
@@ -103,7 +99,7 @@ class _TreePage extends PageStateWidget<TreePage> {
                         margin: EdgeInsets.only(left:getWidth(50),right: getWidth(30) ),
                       ),
                       onTap: (){
-                        pushWidget(widget._context, BlocProvider(child: TreeListPage(item.children[i].name,item.children[i].id,_color), bloc: TreeListPageBloc()));
+                        pushWidget(widget._context, BlocProvider(child: TreeListPage(item.children[i].name,item.children[i].id,Colors.blue), bloc: TreeListPageBloc()));
                       },
                     );},
                childCount:item.children.length,

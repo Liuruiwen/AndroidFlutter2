@@ -61,9 +61,6 @@ class LoginPageBean {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['admin'] = this.admin;
-//    if (this.chapterTops != null) {
-//      data['chapterTops'] = this.chapterTops.map((v) => v.toJson()).toList();
-//    }
     data['collectIds'] = this.collectIds;
     data['email'] = this.email;
     data['icon'] = this.icon;
