@@ -42,12 +42,14 @@ public class WelcomeActivity extends BaseActivity {
             @Override
             public void onTick(long millisUntilFinished) {
                 int count= (int) (millisUntilFinished / 1000);
+                tvClick.setText(String.format("跳转%1$s",count));
                 if(count<1){
                     tvClick.setText("跳转");
+                    action();
                     return;
                 }
 
-                tvClick.setText(String.format("跳转%1$s",count));
+
             }
 
             @Override
@@ -58,8 +60,9 @@ public class WelcomeActivity extends BaseActivity {
     }
 
     void  action(){
-       goActivity(getIntent(MainActivity.class));
-        finish();
+            goActivity(getIntent(MainActivity.class));
+            finish();
+
     }
 
     @Override
