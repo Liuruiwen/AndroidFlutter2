@@ -81,7 +81,7 @@ class _PersonPage extends PageStateWidget<PersonPage>{
               ? pushWidget(widget._context, new UserInfoPage())
               : _loginOut();
         }),
-        _getItem("分享", () {
+        _getItem("其它", () {
           showToast("此功能正在开发中");
         }),
         _getItem("关于我", () {
