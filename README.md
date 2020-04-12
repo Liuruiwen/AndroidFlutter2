@@ -20,7 +20,7 @@ This project is a starting point for a Flutter application.
       5、上拉刷新、下载加载 <br>
       6、我的等等相关功能模块。  <br>
   # 扫码下载apk,有兴趣的可以加QQ群一起交流：478720016<br>
-   <div> <img src="https://github.com/Liuruiwen/AndroidFlutter2/blob/master/gif/AndroidFlutterCode.png"> </div> 
+   <div> <img src="https://github.com/Liuruiwen/AndroidFlutter2/blob/master/flutter_module/drawable/image/android_flutter.png"> </div> 
 </div>
 
 
