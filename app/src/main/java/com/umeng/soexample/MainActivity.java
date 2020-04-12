@@ -114,7 +114,6 @@ public class MainActivity extends BaseActivity implements ShareBoardlistener {
         if(flutterEngine!=null){
             flutterEngine.destroy();
         }
-
         if(flutterView!=null){
             flutterView.removeAllViews();
         }
