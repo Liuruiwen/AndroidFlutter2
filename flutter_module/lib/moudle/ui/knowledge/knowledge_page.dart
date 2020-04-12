@@ -2,10 +2,12 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_module/bloc/AppBloc.dart';
 import 'package:flutter_module/bloc/BlocBase.dart';
 import 'package:flutter_module/moudle/base/BaseFulWidget.dart';
 import 'package:flutter_module/moudle/base/PageStateWidget.dart';
 import 'package:flutter_module/moudle/base/widget/WebPage.dart';
+import 'package:flutter_module/moudle/ui/bean/WebBean.dart';
 import 'package:flutter_module/res/Colours.dart';
 import 'package:flutter_module/res/Dimens.dart';
 import 'package:flutter_module/util/CommonUtil.dart';
@@ -35,12 +37,13 @@ class _KnowledgePage extends PageStateWidget<KnowledgePage> {
   KnowledgePageBloc _bloc;
   int _beforePosition = -1;
   List<Articles> _listChildren;
-
+  AppBloc _appBloc;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     _listChildren = new List();
+    _appBloc = BlocProvider.of<AppBloc>(context);
     _bloc = BlocProvider.of<KnowledgePageBloc>(context);
     WidgetsBinding.instance
         .addPostFrameCallback((_) => _bloc.initData(widget._context));
@@ -152,7 +155,16 @@ class _KnowledgePage extends PageStateWidget<KnowledgePage> {
         ),
         behavior: HitTestBehavior.opaque,
         onTap: () {
-          pushWidget(widget._context,WebPage(_model.link,_model.title));
+          switch(window.defaultRouteName){
+            case"main":
+              _appBloc.getMethodChannel().invokeListMethod(
+                  'web', getWebBean(WebBean(_model.link,_model.title)));
+              break;
+            default:
+              pushWidget(widget._context,WebPage(_model.link,_model.title));
+              break;
+          }
+
         },
       );
     }).toList();

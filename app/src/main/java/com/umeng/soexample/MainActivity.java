@@ -33,6 +33,7 @@ import com.umeng.socialize.utils.SocializeUtils;
 import com.umeng.soexample.base.BaseActivity;
 import com.umeng.soexample.bean.ShareBean;
 import com.umeng.soexample.ui.MapActivity;
+import com.umeng.soexample.ui.WebViewActivity;
 import com.umeng.soexample.until.CustomShareListener;
 import com.umeng.soexample.until.LoginOutListener;
 import com.umeng.soexample.until.ShareManager;
@@ -42,10 +43,12 @@ import java.util.Map;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import io.flutter.facade.Flutter;
+import io.flutter.embedding.android.FlutterView;
+import io.flutter.embedding.engine.FlutterEngine;
+import io.flutter.embedding.engine.dart.DartExecutor;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
-import io.flutter.view.FlutterView;
+
 
 import static androidx.core.content.PermissionChecker.PERMISSION_GRANTED;
 /**
@@ -64,8 +67,11 @@ public class MainActivity extends BaseActivity implements ShareBoardlistener {
     private static final int NOT_NOTICE = 2;
     private AlertDialog alertDialog;
     private AlertDialog mDialog;
+    private FlutterView flutterView;
     public AMapLocationClient mLocationClient = null;
     public AMapLocationClientOption mLocationOption = null;
+    private  boolean isMain=false;
+    FlutterEngine flutterEngine;
     public static Intent getIntent(Context context) {
         return new Intent(context, MainActivity.class);
     }
@@ -79,18 +85,17 @@ public class MainActivity extends BaseActivity implements ShareBoardlistener {
     protected void initView() {
         dialog = new ProgressDialog(this);
         mainFrameLayout = findViewById(R.id.main_frame_layout);
-        mainFrameLayout.setVisibility(View.INVISIBLE);
-        FlutterView flutterView = Flutter.createView(this, getLifecycle(), "main");
+        flutterView=new FlutterView(this);
+
+        // 关键代码，将Flutter页面显示到FlutterView中
+         flutterEngine = new FlutterEngine(this);
+        flutterEngine.getNavigationChannel().setInitialRoute("main");
+        flutterEngine.getDartExecutor().executeDartEntrypoint(
+                DartExecutor.DartEntrypoint.createDefault()
+        );
+        flutterView.attachToFlutterEngine(flutterEngine);
         mainFrameLayout.addView(flutterView);
-        final FlutterView.FirstFrameListener[] listeners = new FlutterView.FirstFrameListener[1];
-        listeners[0] = new FlutterView.FirstFrameListener() {
-            @Override
-            public void onFirstFrame() {
-                mainFrameLayout.setVisibility(View.VISIBLE);
-            }
-        };
-        flutterView.addFirstFrameListener(listeners[0]);
-        mMethodChannel = new MethodChannel(flutterView, METHOD_CHANNER);
+        mMethodChannel = new MethodChannel(flutterEngine.getDartExecutor().getBinaryMessenger(), METHOD_CHANNER);
         initListener();
         requestPermission();
 
@@ -106,9 +111,31 @@ public class MainActivity extends BaseActivity implements ShareBoardlistener {
 
     @Override
     protected void onDestroy() {
+        if(flutterEngine!=null){
+            flutterEngine.destroy();
+        }
+
+        if(flutterView!=null){
+            flutterView.removeAllViews();
+        }
+        if(mainFrameLayout!=null){
+            mainFrameLayout.removeAllViews();
+        }
         super.onDestroy();
+
         UMShareAPI.get(this).release();
 
+    }
+
+    @Override
+    public void onBackPressed() {
+//        super.onBackPressed();
+
+        if(this.flutterView!=null && flutterEngine!=null && isMain==false){
+                flutterEngine.getNavigationChannel().popRoute();
+        }else {
+            super.onBackPressed();
+        }
     }
 
     @Override
@@ -117,13 +144,24 @@ public class MainActivity extends BaseActivity implements ShareBoardlistener {
         UMShareAPI.get(this).onSaveInstanceState(outState);
     }
 
+
+
     private void initListener() {
         mMethodChannel.setMethodCallHandler(new MethodChannel.MethodCallHandler() {
             @Override
             public void onMethodCall(MethodCall methodCall, MethodChannel.Result result) {
                 switch (methodCall.method) {
+                    case "bool_main":
+                           isMain= (boolean) methodCall.arguments;
+                           if(isMain){
+                               finish();
+                           }
+                        break;
                     case "map":
                         startActivity(MapActivity.getIntent(MainActivity.this));
+                        break;
+                    case "web":
+                        startActivity(WebViewActivity.getIntent(MainActivity.this,methodCall.arguments.toString()));
                         break;
                     case "login_weixin":
                         UMShareAPI.get(MainActivity.this).getPlatformInfo(MainActivity.this, SHARE_MEDIA.WEIXIN, authListener);

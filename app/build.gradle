@@ -41,7 +41,7 @@ android {
 //            storePassword '123abc'
 //        }
         debug {
-            storeFile file('debug.keystore')
+            storeFile file("debug.keystore")
             storePassword "android"
             keyAlias "androiddebugkey"
             keyPassword "android"
@@ -53,9 +53,9 @@ android {
             signingConfig signingConfigs.config
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
-        debug {
-            signingConfig signingConfigs.debug
-        }
+//        debug {
+//            signingConfig signingConfigs.debug
+//        }
 
     }
     sourceSets {

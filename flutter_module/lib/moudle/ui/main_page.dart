@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_module/bloc/AppBloc.dart';
 import 'package:flutter_module/bloc/BlocBase.dart';
 import 'package:flutter_module/moudle/ui/home/bloc/home_page_bloc.dart';
 import 'package:flutter_module/moudle/ui/home/home_page.dart';
@@ -27,14 +28,19 @@ class MainPage extends StatefulWidget{
   
 }
 
-class _MainPage extends State<MainPage>{
+class _MainPage extends State<MainPage> with WidgetsBindingObserver{
   int _currentIndex;
   PageController _controller;
+  bool isShow=false;
+  AppBloc _appBloc;
+  DateTime lastPopTime; //上次点击时间
   @override
   void initState() {
     super.initState();
     _currentIndex = 0;
     _controller = PageController(initialPage: _currentIndex);
+    WidgetsBinding.instance.addObserver(this);
+    _appBloc = BlocProvider.of<AppBloc>(context);
   }
 
  
@@ -47,28 +53,79 @@ class _MainPage extends State<MainPage>{
         backgroundColor: Colors.blue,
         textColor: Colors.white);
   }
+
+
+
+
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
+  void deactivate() {
+    // TODO: implement deactivate
+    super.deactivate();
+    isMainWidget(false);
+    print("当前状态是======flase");
+  }
+
+  void isMainWidget(bool isMain){
+    _appBloc.getMethodChannel().invokeListMethod(
+        'bool_main', isMain);
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    // TODO: implement didChangeAppLifecycleState
+    super.didChangeAppLifecycleState(state);
+    switch (state) {
+      case AppLifecycleState.inactive: // 处于这种状态的应用程序应该假设它们可能在任何时候暂停。
+        break;
+      case AppLifecycleState.resumed: // 应用程序可见，前台
+      print("我在前台了哦===========");
+        break;
+      case AppLifecycleState.paused: // 应用程序不可见，后台
+        print("现在退到了后台哦===========");
+        break;
+      case AppLifecycleState.detached:
+        break;
+    }
 
   }
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
     _controller.dispose();
   }
 
+
+
   @override
-  Widget build(BuildContext context) => Scaffold(
-    body:_getPageView(context),
-    bottomNavigationBar: BottomNavigationBar(
-      type: BottomNavigationBarType.fixed,
-      items: getItems(),
-      currentIndex: _currentIndex,
-      onTap: onTap,
-    ),
-  );
+  Widget build(BuildContext context){
+    return getBackWidget( Scaffold(
+      body:_getPageView(context),
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        items: getItems(),
+        currentIndex: _currentIndex,
+        onTap: onTap,
+      ),
+    ));
+
+  }
+
+  Widget getBackWidget(Widget widget){
+    return WillPopScope(
+        onWillPop: ()  async{
+          // 点击返回键的操作
+          if(lastPopTime == null || DateTime.now().difference(lastPopTime) > Duration(seconds: 2)){
+            lastPopTime = DateTime.now();
+            showToast("再按一次退出");
+          }else{
+            lastPopTime = DateTime.now();
+            // 退出app
+            isMainWidget(true);
+          }
+    },child: widget );
+  }
 
 
 

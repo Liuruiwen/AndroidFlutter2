@@ -1,5 +1,8 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_module/bloc/AppBloc.dart';
 import 'package:flutter_module/bloc/BlocBase.dart';
 import 'package:flutter_module/moudle/base/BaseFulWidget.dart';
 import 'package:flutter_module/moudle/base/BaseStateWidget.dart';
@@ -7,6 +10,7 @@ import 'package:flutter_module/moudle/base/widget/ChipsTitle.dart';
 import 'package:flutter_module/moudle/base/widget/LoadingMoreToast.dart';
 import 'package:flutter_module/moudle/base/widget/RefreshWidget.dart';
 import 'package:flutter_module/moudle/base/widget/WebPage.dart';
+import 'package:flutter_module/moudle/ui/bean/WebBean.dart';
 import 'package:flutter_module/res/Colours.dart';
 import 'package:flutter_module/res/Dimens.dart';
 import 'package:flutter_module/util/CommonUtil.dart';
@@ -32,12 +36,15 @@ class _SearchPage extends BaseStateWidget<SearchPage> {
   final TextEditingController _etControllerSearch = TextEditingController();
   SearchPageBloc _bloc;
   String  _keywords;
+  AppBloc _appBloc;
+
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     _bloc = BlocProvider.of<SearchPageBloc>(context);
+    _appBloc = BlocProvider.of<AppBloc>(context);
     WidgetsBinding.instance
         .addPostFrameCallback((_) => _bloc.initData(context));
   }
@@ -71,7 +78,18 @@ class _SearchPage extends BaseStateWidget<SearchPage> {
             List<Widget> _ListWidget = nbs.data?.map((item) {
               return Container(
                 child: GestureDetector(child: getItem(item),onTap: (){
-                  pushWidget(context,WebPage(item.link,item.title));
+
+                  switch(window.defaultRouteName){
+                    case"main":
+                      _appBloc.getMethodChannel().invokeListMethod(
+                          'web', getWebBean(WebBean(item.link,item.title)));
+                      break;
+                    default:
+                      pushWidget(context,WebPage(item.link,item.title));
+                      break;
+                  }
+
+
                 },),
                 padding: EdgeInsets.only(
                     top: getWidth(Dimens.dp15), bottom: getWidth(Dimens.dp15)),

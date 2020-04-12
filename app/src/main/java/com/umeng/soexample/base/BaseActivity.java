@@ -5,7 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import io.flutter.facade.Flutter;
+import io.flutter.embedding.android.FlutterActivity;
 import io.flutter.view.FlutterView;
 
 /**
@@ -13,7 +13,7 @@ import io.flutter.view.FlutterView;
  * Date:2019/11/30.
  * Desc:
  */
-abstract public class BaseActivity  extends AppCompatActivity {
+abstract public class BaseActivity  extends FlutterActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

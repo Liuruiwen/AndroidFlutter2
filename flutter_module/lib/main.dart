@@ -8,18 +8,26 @@ import 'bloc/AppBloc.dart';
 import 'bloc/BlocBase.dart';
 import 'moudle/ui/main_page.dart';
 
-void main() => runApp(BlocProvider(child: MyApp(), bloc: AppBloc()));
+void main() => runApp(getMainWidget(window.defaultRouteName));
 
-class MyApp extends StatefulWidget{
+Widget getMainWidget(String route){
+  switch (route){
+    case "main":
+      return BlocProvider(child: MainApp(), bloc: AppBloc());
+    default:
+      return MyApp();
+  }
+}
+class MainApp extends StatefulWidget{
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return _MyApp();
+    return _MainApp();
   }
 
 }
 
-class _MyApp extends State<MyApp>{
+class _MainApp extends State<MainApp>{
   AppBloc _bloc;
   @override
   void initState() {
@@ -52,20 +60,12 @@ class _MyApp extends State<MyApp>{
             theme: ThemeData(
               primarySwatch: nab.data.appThemeColor,
             ),
-            home: _getHomeWidget(window.defaultRouteName),
+            home:MainPage(),
           );
         });
 
   }
 
-  Widget _getHomeWidget(String route){
-    switch (route){
-      case "main":
-        return MainPage();
-      default:
-        return MainPage();
-    }
-  }
   void showToast(String msg){
     Fluttertoast.showToast(
         msg: msg,
@@ -77,4 +77,20 @@ class _MyApp extends State<MyApp>{
   }
 }
 
+
+class MyApp extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: Center(child: Text("测试"),),
+    );
+  }
+
+
+}
 

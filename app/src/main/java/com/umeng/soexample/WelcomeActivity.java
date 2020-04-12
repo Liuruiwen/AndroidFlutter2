@@ -24,10 +24,11 @@ public class WelcomeActivity extends BaseActivity {
     @Override
     protected void initView() {
         tvClick = findViewById(R.id.tv_click);
+
         tvClick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                timer.onFinish();
+                timer.cancel();
                 action();
             }
         });

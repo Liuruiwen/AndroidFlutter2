@@ -1,10 +1,11 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_module/moudle/ui/bean/WebBean.dart';
 import 'package:flutter_module/res/Dimens.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'BaseFulWidget.dart';
-
+import 'dart:convert' as convert;
 
 /**
  * Created by Amuser
@@ -72,6 +73,9 @@ import 'BaseFulWidget.dart';
   }
 
 
+  getWebBean(WebBean bean){
+    return convert.jsonEncode(bean.toJson());
+  }
 
 
   void closePageForWidget(BuildContext buildContext, Widget widget) {

@@ -7,6 +7,7 @@ import 'package:flutter_module/bloc/BlocBase.dart';
 import 'package:flutter_module/moudle/base/BaseFulWidget.dart';
 import 'package:flutter_module/moudle/base/PageStateWidget.dart';
 import 'package:flutter_module/moudle/base/widget/WebPage.dart';
+import 'package:flutter_module/moudle/ui/bean/WebBean.dart';
 import 'package:flutter_module/moudle/ui/home/bean/BannerBean.dart';
 import 'package:flutter_module/moudle/ui/home/bean/HotProjectListBean.dart';
 import 'package:flutter_module/moudle/ui/home/bloc/home_page_bloc.dart';
@@ -212,8 +213,18 @@ class _HomePage extends PageStateWidget<HomePage> {
       return new GestureDetector(
         child: Image.network(item.imagePath, fit: BoxFit.cover),
         onTap: () {
-          pushWidget(widget._context,
-              WebPage(item.url,item.title));
+          //发消息给Android
+          switch(window.defaultRouteName){
+            case"main":
+              _appBloc.getMethodChannel().invokeListMethod(
+                  'web', getWebBean(WebBean(item.url,item.title)));
+              break;
+            default:
+              pushWidget(widget._context,
+                  WebPage(item.url,item.title));
+              break;
+          }
+
         },
       );
     })?.toList();

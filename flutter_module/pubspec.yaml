@@ -35,7 +35,8 @@ dependencies:
   flutter_webview_plugin: ^0.3.10+1  #webview
   cookie_jar: ^1.0.0
   dio_cookie_manager: ^1.0.0
-  shared_preferences: ^0.5.4+8  #内存储
+  shared_preferences: ^0.5.6+2  #内存储
+  webview_flutter: ^0.3.19+8
 
 dev_dependencies:
   flutter_test:
@@ -59,7 +60,6 @@ flutter:
   assets:
     #  "-"前面有五个空格，后面有一个空格，不然引用不了
     - drawable/image/
-    - drawable/html/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

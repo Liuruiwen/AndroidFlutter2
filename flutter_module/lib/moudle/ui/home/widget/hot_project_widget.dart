@@ -1,8 +1,13 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_module/bloc/AppBloc.dart';
+import 'package:flutter_module/bloc/BlocBase.dart';
 import 'package:flutter_module/moudle/base/BaseFulWidget.dart';
 import 'package:flutter_module/moudle/base/BaseStateWidget.dart';
 import 'package:flutter_module/moudle/base/widget/WebPage.dart';
+import 'package:flutter_module/moudle/ui/bean/WebBean.dart';
 import 'package:flutter_module/moudle/ui/home/bean/HotProjectListBean.dart';
 import 'package:flutter_module/res/Colours.dart';
 import 'package:flutter_module/res/Dimens.dart';
@@ -26,14 +31,35 @@ class HotProjectWidget extends BaseFulWidget{
 
 class _HotProjectWidget extends BaseStateWidget<HotProjectWidget>{
 
+  AppBloc _appBloc;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _appBloc = BlocProvider.of<AppBloc>(context);
+  }
+
   @override
   Widget getBuildWidget(BuildContext buildContext) {
     // TODO: implement getBuildWidget
     return GestureDetector(
       child: _getProjectItem(widget._dataBean),
       onTap: (){
-        pushWidget(widget._context,
-            WebPage(widget._dataBean.link,widget._dataBean.title));
+
+        switch(window.defaultRouteName){
+          case"main":
+            _appBloc.getMethodChannel().invokeListMethod(
+                'web', getWebBean(WebBean(widget._dataBean.link,widget._dataBean.title)));
+            break;
+          default:
+            pushWidget(widget._context,
+                WebPage(widget._dataBean.link,widget._dataBean.title));
+            break;
+        }
+
+
+
       },
     ) ;
   }
